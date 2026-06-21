@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/si3mshady/k8s-nonprofit-deep-researcher.git
+      revision: HEAD
+      directories:
+      - path: charts/*
+  template:
+    metadata:
+      name: '{{path.basename}}-agent'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/si3mshady/k8s-nonprofit-deep-researcher.git
+        targetRevision: HEAD
+        path: '{{path}}'
+        helm:
+          valueFiles:
+            - values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
