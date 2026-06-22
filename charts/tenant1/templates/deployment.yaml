@@ -44,11 +44,3 @@ spec:
               value: "{{ .Values.config.MAX_TAVILY_RESULTS }}"
             - name: TEST_MODE
               value: "{{ .Values.config.TEST_MODE }}"
-          volumeMounts:
-            - name: config
-              mountPath: /app/.output/public/config.json
-              subPath: config.json
-      volumes:
-        - name: config
-          configMap:
-            name: {{ .Release.Name }}-config
