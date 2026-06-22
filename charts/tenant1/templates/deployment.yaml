@@ -21,7 +21,7 @@ spec:
               containerPort: {{ .Values.service.targetPort }}
           volumeMounts:
             - name: config
-              mountPath: /app/public/config.json
+              mountPath: /app/.output/public/config.json  # ← Changed from /app/public/config.json
               subPath: config.json
       volumes:
         - name: config
