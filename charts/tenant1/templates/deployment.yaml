@@ -19,9 +19,34 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "{{ .Values.service.targetPort }}"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: TENANT_ID
+              value: "{{ .Values.config.TENANT_ID }}"
+            - name: TENANT_NAME
+              value: "{{ .Values.config.TENANT_NAME }}"
+            - name: TENANT_TOPIC
+              value: "{{ .Values.config.TENANT_TOPIC }}"
+            - name: SYSTEM_PROMPT
+              value: "{{ .Values.config.SYSTEM_PROMPT }}"
+            - name: TAVILY_API_KEY
+              value: "{{ .Values.config.TAVILY_API_KEY }}"
+            - name: OLLAMA_URL
+              value: "{{ .Values.config.OLLAMA_URL }}"
+            - name: OLLAMA_MODEL
+              value: "{{ .Values.config.OLLAMA_MODEL }}"
+            - name: MAX_TAVILY_RESULTS
+              value: "{{ .Values.config.MAX_TAVILY_RESULTS }}"
+            - name: TEST_MODE
+              value: "{{ .Values.config.TEST_MODE }}"
           volumeMounts:
             - name: config
-              mountPath: /app/.output/public/config.json  # ← Changed from /app/public/config.json
+              mountPath: /app/.output/public/config.json
               subPath: config.json
       volumes:
         - name: config
