@@ -19,7 +19,7 @@ config:
   OLLAMA_URL: "https://2970-162-225-15-24.ngrok-free.app/api/chat/"     #+ /api/chat
   OLLAMA_MODEL: "qwen2.5:0.5b"
   MAX_TAVILY_RESULTS: 2
-  TEST_MODE: "true"
+  TEST_MODE: "false"
 
 
 ingress:
