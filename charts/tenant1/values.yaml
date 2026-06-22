@@ -32,3 +32,9 @@ env:
   NITRO_OLLAMA_MODEL: "qwen2.5:0.5b"
   NITRO_MAX_TAVILY_RESULTS: "2"
   NITRO_TEST_MODE: "true"
+
+ingress:
+  enabled: false
+
+httpRoute:
+  enabled: false
