@@ -121,7 +121,10 @@ async function ollamaExtract(state: S): Promise<Partial<S>> {
   try {
     const res = await fetch(state.ollamaUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });
@@ -299,7 +302,10 @@ Now output ONLY the markdown draft proposal letter.`;
   try {
     const res = await fetch(input.ollamaUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });

@@ -24,8 +24,8 @@ services:
     volumes:
       - ./config.runtime.json:/app/config.json:ro
       - ./config.runtime.json:/app/.output/public/config.json:ro
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
 
   nginx:
     image: nginx:1.27-alpine
