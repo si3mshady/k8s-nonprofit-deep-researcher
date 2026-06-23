@@ -44,3 +44,13 @@ spec:
               value: "{{ .Values.config.MAX_TAVILY_RESULTS }}"
             - name: TEST_MODE
               value: "{{ .Values.config.TEST_MODE }}"
+            - name: RUNTIME_CONFIG_PATH
+              value: "/app/config.json"
+          volumeMounts:
+            - name: tenant-config
+              mountPath: /app/config.json
+              subPath: config.json
+      volumes:
+        - name: tenant-config
+          configMap:
+            name: {{ .Release.Name }}-config

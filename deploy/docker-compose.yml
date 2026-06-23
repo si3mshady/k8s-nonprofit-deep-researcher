@@ -1,0 +1,37 @@
+# For local testing: `docker compose -f deploy/docker-compose.yml up --build`
+# Visit http://localhost:8080
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOST: "0.0.0.0"
+      # To test environment variable injection (Kubernetes deployment-style):
+      TENANT_ID: "compose-tenant"
+      TENANT_NAME: "Hope Foundation (Compose)"
+      TENANT_TOPIC: "Grants supporting dogs in Texas"
+      SYSTEM_PROMPT: "You are a grant research assistant. Given a source about funding opportunities and a non-profit's mission, extract a single grant or funding opportunity from the source if one exists. Respond with strict JSON: {\"name\": \"<grant name>\", \"summary\": \"<one sentence, max 30 words, plain text>\"}. If no relevant grant is found, respond with {\"name\": null, \"summary\": null}. No prose, no markdown, JSON only."
+      TAVILY_API_KEY: "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"
+      OLLAMA_URL: "https://2970-162-225-15-24.ngrok-free.app/api/chat/"
+      OLLAMA_MODEL: "qwen2.5:0.5b"
+      MAX_TAVILY_RESULTS: 2
+      TEST_MODE: "true"
+      # Alternatively, comment out RUNTIME_CONFIG_PATH and the volumes block to test pure env-var config injection:
+      RUNTIME_CONFIG_PATH: /app/config.json
+    volumes:
+      - ./config.runtime.json:/app/config.json:ro
+      - ./config.runtime.json:/app/.output/public/config.json:ro
+    expose:
+      - "3000"
+
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+      - app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
