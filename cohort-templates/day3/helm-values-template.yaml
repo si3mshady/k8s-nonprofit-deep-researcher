@@ -1,0 +1,52 @@
+# Day 3: Helm Tenant Values Template (values.yaml)
+#
+# This file is used to configure individual tenant deployments.
+# Each tenant folder (e.g., charts/tenant1/, charts/tenant2/) will have its own values.yaml.
+
+# 1. Global Deployment Configuration
+replicaCount: 1
+
+image:
+  repository: myregistry.azurecr.io/grant-explorer-app
+  pullPolicy: IfNotPresent
+  # Overridden in pipeline or set to current production release tag
+  tag: "v1.0.0"
+
+service:
+  type: ClusterIP
+  port: 80
+
+# 2. Tenant Routing & Ingress Customizations
+# Instructs Kubernetes Ingress controllers (Nginx/Traefik) where to route wildcard traffic
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: tenant1.myplatform.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: tenant1-tls
+      hosts:
+        - tenant1.myplatform.com
+
+# 3. Dynamic Tenant Runtime Parameters
+# Mounted directly as a ConfigMap to /app/config.json in the container.
+# This eliminates building custom images per tenant.
+tenantConfig:
+  TENANT_ID: "tenant1"
+  TENANT_NAME: "Hope Foundation"
+  TENANT_TOPIC: "Grants supporting youth literacy and libraries"
+  OLLAMA_URL: "http://ollama-service.shared-services.svc.cluster.local:11434"
+  OLLAMA_MODEL: "qwen2.5:0.5b"
+  MAX_TAVILY_RESULTS: 3
+  TEST_MODE: "false"
+
+# 4. Sensitive Key Management (Secret Ref)
+# Used to populate environment variables securely inside the pod.
+tenantSecrets:
+  TAVILY_API_KEY: "tvly-production-key-for-tenant1"
