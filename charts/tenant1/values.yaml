@@ -24,9 +24,9 @@ ingress:
   tls: []
 
 config:
-  TENANT_ID: "si3mshady"
-  TENANT_NAME: "shady-pets"
-  TENANT_TOPIC: "Grants supporting dogs in Texas"
+  TENANT_ID: "si3mshady-prep"
+  TENANT_NAME: "shady-college-prep"
+  TENANT_TOPIC: "Grants supporting college students  in Texas"
   SYSTEM_PROMPT: "You are a grant research assistant. Given a source about funding opportunities and a non-profit's mission, extract a single grant or funding opportunity from the source if one exists. Respond with strict JSON: {\"name\": \"<grant name>\", \"summary\": \"<one sentence, max 30 words, plain text>\"}. If no relevant grant is found, respond with {\"name\": null, \"summary\": null}. No prose, no markdown, JSON only."
   TAVILY_API_KEY: "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"
   OLLAMA_URL: "https://4fde-162-225-15-24.ngrok-free.app/api/chat/"
@@ -36,9 +36,9 @@ config:
 
 # Nitro runtime config env vars:
 env:
-  NITRO_TENANT_ID: "dog-heaven"
-  NITRO_TENANT_NAME: "Hope Foundation"
-  NITRO_TENANT_TOPIC: "Grants supporting dogs in Texas"
+  NITRO_TENANT_ID: "prep-heaven"
+  NITRO_TENANT_NAME: "Prep Foundation"
+  NITRO_TENANT_TOPIC: "Grants supporting College Students in Texas"
   NITRO_SYSTEM_PROMPT: "You are a grant research assistant. Given a source about funding opportunities and a non-profit's mission, extract a single grant or funding opportunity from the source if one exists. Respond with strict JSON: {\"name\": \"<grant name>\", \"summary\": \"<one sentence, max 30 words, plain text>\"}. If no relevant grant is found, respond with {\"name\": null, \"summary\": null}. No prose, no markdown, JSON only."
   NITRO_TAVILY_API_KEY: "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"
   NITRO_OLLAMA_URL: "https://2970-162-225-15-24.ngrok-free.app/api/chat/"
