@@ -17,19 +17,19 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: traefik
   hosts:
-    - host: "dog-heaven.localdev.me" # Map this in your /etc/hosts file
+    - host: "tenant1.local" # Map this in your /etc/hosts file
       paths:
         - path: /
           pathType: Prefix
   tls: []
 
 config:
-  TENANT_ID: "dog-heaven"
-  TENANT_NAME: "Hope Foundation"
+  TENANT_ID: "si3mshady"
+  TENANT_NAME: "shady-pets"
   TENANT_TOPIC: "Grants supporting dogs in Texas"
   SYSTEM_PROMPT: "You are a grant research assistant. Given a source about funding opportunities and a non-profit's mission, extract a single grant or funding opportunity from the source if one exists. Respond with strict JSON: {\"name\": \"<grant name>\", \"summary\": \"<one sentence, max 30 words, plain text>\"}. If no relevant grant is found, respond with {\"name\": null, \"summary\": null}. No prose, no markdown, JSON only."
-  TAVILY_API_KEY: "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"
-  OLLAMA_URL: "https://2970-162-225-15-24.ngrok-free.app/api/chat/"
+  TAVILY_API_KEY: "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"
+  OLLAMA_URL: "https://4fde-162-225-15-24.ngrok-free.app/api/chat/"
   OLLAMA_MODEL: "qwen2.5:0.5b"
   MAX_TAVILY_RESULTS: 2
   TEST_MODE: "true"
