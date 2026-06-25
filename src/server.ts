@@ -35,9 +35,7 @@ async function serveRuntimeConfig(request: Request): Promise<Response | null> {
     const candidatePaths = [
       ...(configuredPath ? [configuredPath] : []),
       "/app/config.json",
-      "/app/.output/public/config.json",
-      "./config.json",
-      "./public/config.json"
+      "./config.json"
     ];
     const uniquePaths = Array.from(new Set(candidatePaths));
 
