@@ -1,0 +1,47 @@
+image:
+  repository: si3mshady/grant-dashboard
+  tag: 1
+  pullPolicy: Always
+
+replicas: 1
+
+service:
+  type: ClusterIP
+  port: "80"
+  targetPort: "3000"
+
+# Ingress Configuration
+ingress:
+  enabled: true
+  className: "" # Empty will use the default ingress controller (Traefik in k3s)
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  hosts:
+    - host: "tenant2.local" # Map this in your /etc/hosts file
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+config:
+  TENANT_ID: "dog-gone"
+  TENANT_NAME: "shady-dog"
+  TENANT_TOPIC: "Grants supporting dog owners in Texas"
+  SYSTEM_PROMPT: "You are a grant research assistant. Given a source about funding opportunities and a non-profit's mission, extract a single grant or funding opportunity from the source if one exists. Respond with strict JSON: {\"name\": \"<grant name>\", \"summary\": \"<one sentence, max 30 words, plain text>\"}. If no relevant grant is found, respond with {\"name\": null, \"summary\": null}. No prose, no markdown, JSON only."
+  TAVILY_API_KEY: "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"
+  OLLAMA_URL: "https://4fde-162-225-15-24.ngrok-free.app/api/chat/"
+  OLLAMA_MODEL: "qwen2.5:0.5b"
+  MAX_TAVILY_RESULTS: 2
+  TEST_MODE: "true"
+
+# Nitro runtime config env vars:
+env:
+  NITRO_TENANT_ID: "shady-dog"
+  NITRO_TENANT_NAME: "shady-dog"
+  NITRO_TENANT_TOPIC: "Grants supporting dog in Texas"
+  NITRO_SYSTEM_PROMPT: "You are a grant research assistant. Given a source about funding opportunities and a non-profit's mission, extract a single grant or funding opportunity from the source if one exists. Respond with strict JSON: {\"name\": \"<grant name>\", \"summary\": \"<one sentence, max 30 words, plain text>\"}. If no relevant grant is found, respond with {\"name\": null, \"summary\": null}. No prose, no markdown, JSON only."
+  NITRO_TAVILY_API_KEY: "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"
+  NITRO_OLLAMA_URL: "https://2970-162-225-15-24.ngrok-free.app/api/chat/"
+  NITRO_OLLAMA_MODEL: "qwen2.5:0.5b"
+  NITRO_MAX_TAVILY_RESULTS: "2"
+  NITRO_TEST_MODE: "true"
