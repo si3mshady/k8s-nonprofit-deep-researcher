@@ -10,6 +10,19 @@ service:
   port: "80"
   targetPort: "3000"
 
+# Ingress Configuration
+ingress:
+  enabled: true
+  className: "" # Empty will use the default ingress controller (Traefik in k3s)
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  hosts:
+    - host: "dog-heaven.localdev.me" # Map this in your /etc/hosts file
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
 config:
   TENANT_ID: "dog-heaven"
   TENANT_NAME: "Hope Foundation"
@@ -21,7 +34,7 @@ config:
   MAX_TAVILY_RESULTS: 2
   TEST_MODE: "true"
 
-# ADD THIS - Nitro runtime config env vars:
+# Nitro runtime config env vars:
 env:
   NITRO_TENANT_ID: "dog-heaven"
   NITRO_TENANT_NAME: "Hope Foundation"
@@ -32,9 +45,3 @@ env:
   NITRO_OLLAMA_MODEL: "qwen2.5:0.5b"
   NITRO_MAX_TAVILY_RESULTS: "2"
   NITRO_TEST_MODE: "true"
-
-ingress:
-  enabled: false
-
-httpRoute:
-  enabled: false

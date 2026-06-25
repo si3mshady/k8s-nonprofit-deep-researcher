@@ -20,12 +20,15 @@ spec:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
           env:
+            # --- Base Environment ---
             - name: NODE_ENV
               value: production
             - name: PORT
               value: "{{ .Values.service.targetPort }}"
             - name: HOST
               value: "0.0.0.0"
+              
+            # --- Standard Config Vars ---
             - name: TENANT_ID
               value: "{{ .Values.config.TENANT_ID }}"
             - name: TENANT_NAME
@@ -44,13 +47,23 @@ spec:
               value: "{{ .Values.config.MAX_TAVILY_RESULTS }}"
             - name: TEST_MODE
               value: "{{ .Values.config.TEST_MODE }}"
-            - name: RUNTIME_CONFIG_PATH
-              value: "/app/config.json"
-          volumeMounts:
-            - name: tenant-config
-              mountPath: /app/config.json
-              subPath: config.json
-      volumes:
-        - name: tenant-config
-          configMap:
-            name: {{ .Release.Name }}-config
+              
+            # --- Nitro Runtime Env Vars ---
+            - name: NITRO_TENANT_ID
+              value: "{{ .Values.env.NITRO_TENANT_ID }}"
+            - name: NITRO_TENANT_NAME
+              value: "{{ .Values.env.NITRO_TENANT_NAME }}"
+            - name: NITRO_TENANT_TOPIC
+              value: "{{ .Values.env.NITRO_TENANT_TOPIC }}"
+            - name: NITRO_SYSTEM_PROMPT
+              value: {{ .Values.env.NITRO_SYSTEM_PROMPT | quote }}
+            - name: NITRO_TAVILY_API_KEY
+              value: "{{ .Values.env.NITRO_TAVILY_API_KEY }}"
+            - name: NITRO_OLLAMA_URL
+              value: "{{ .Values.env.NITRO_OLLAMA_URL }}"
+            - name: NITRO_OLLAMA_MODEL
+              value: "{{ .Values.env.NITRO_OLLAMA_MODEL }}"
+            - name: NITRO_MAX_TAVILY_RESULTS
+              value: "{{ .Values.env.NITRO_MAX_TAVILY_RESULTS }}"
+            - name: NITRO_TEST_MODE
+              value: "{{ .Values.env.NITRO_TEST_MODE }}"
